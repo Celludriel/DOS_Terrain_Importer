@@ -1,26 +1,46 @@
 ﻿<Window x:Class="DosTerrainImporter.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Devine Divinity Original Sin Terrain Importer" Height="407.919" Width="652">
+        Title="Devine Divinity Original Sin Terrain Importer" Height="450" Width="650">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="85*"/>
-            <ColumnDefinition Width="237*"/>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="l3dtGenerateButton" Content="Generate" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="L3dtGenerate_Click" Grid.Column="1"/>
-        <TextBox x:Name="l3dtTextBox" Height="23" Margin="5.583,225,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Drop="L3dtTextBox_Drop" PreviewDragOver="L3dtTextBox_PreviewDragOver" Grid.Column="1"/>
-        <Label x:Name="l3dtTextBoxLabel" Content="L3DT map" HorizontalAlignment="Left" Margin="102,222,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="l3dtTextBoxBrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="0,226,10,0" VerticalAlignment="Top" Width="75" Click="L3dtFileBrowse_Click" Grid.Column="1"/>
-        <TextBox x:Name="dosTextBox" Height="23" Margin="5.583,109,90,0" VerticalAlignment="Top" PreviewDragOver="L3dtDosTextBox_PreviewDragOver" Drop="L3dtDosTextBox_Drop" Grid.Column="1"/>
-        <Label x:Name="dosTextBoxLabel" Content="DOS Terrain File" HorizontalAlignment="Left" Margin="76,106,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="dosTextBoxBrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="0,110,10,0" VerticalAlignment="Top" Width="75" Click="L3dtDosBrowse_Click" Grid.Column="1"/>
-        <Label Content="Create a new terrain with the Divinity Engine. Use even numbers for size. Example: 1000x800.&#xD;&#xA;Save it and close the editor.&#xD;&#xA;Locate the &quot;Terrain__000.data&quot; file or whatever name you gave it. It should be in this path:&#xD;&#xA;\Divinity - Original Sin\Data\Editor\Mods\ModuleName\Levels\LevelName\Terrains&#xD;&#xA;Backup it for safety. Drag and drop it in the box below." HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Label Content="Heightmap should be a grayscale image.  This tool works with bmp, jpg, png and gif formats. &#xD;&#xA;If you use png or gif, avoid transparency.&#xD;&#xA;If the size of the terrain is (x; y), the size of the heightmap should be (x/2 + 1; y/2 + 1). Example: 501x401." HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="minHeightTextBox" Height="23" Margin="101,317,317,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="-1" Grid.Column="1"/>
-        <Label Content="Minimum height" HorizontalAlignment="Left" Margin="8,315,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <TextBox x:Name="maxHeightTextBox" Height="23" Margin="328,317,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="20" Grid.Column="1"/>
-        <Label Content="Maximum height" HorizontalAlignment="Left" Margin="232,317,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <Label Content="Adjust the size of your mountains below. This is equivalent to the &quot;strength&quot; of the terrain brush in the editor." HorizontalAlignment="Left" Margin="10,283,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <TabControl HorizontalAlignment="Left" Height="423" VerticalAlignment="Top" Width="644">
+            <TabItem Header="Grayscale">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="grayGenerateButton" Content="Generate" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="GrayGenerate_Click"/>
+                    <TextBox x:Name="grayBitmapTextBox" Height="23" Margin="176,225,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Drop="GrayBitmapTextBox_Drop" PreviewDragOver="GrayBitmapTextBox_PreviewDragOver"/>
+                    <Label Content="Heightmap" HorizontalAlignment="Left" Margin="102,222,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="grayTextBoxBrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="0,226,10,0" VerticalAlignment="Top" Width="75" Click="GrayBitmapBrowse_Click"/>
+                    <TextBox x:Name="grayDosTextBox" Height="23" Margin="176,109,90,0" VerticalAlignment="Top" PreviewDragOver="GrayDosTextBox_PreviewDragOver" Drop="GrayDosTextBox_Drop"/>
+                    <Label Content="DOS Terrain File" HorizontalAlignment="Left" Margin="76,106,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="grayDosTextBoxBrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="0,110,10,0" VerticalAlignment="Top" Width="75" Click="GrayDosBrowse_Click"/>
+                    <Label Content="Create a new terrain with the Divinity Engine. Use even numbers for size. Example: 1000x800.&#xD;&#xA;Save it and close the editor.&#xD;&#xA;Locate the &quot;Terrain__000.data&quot; file or whatever name you gave it. It should be in this path:&#xD;&#xA;\Divinity - Original Sin\Data\Editor\Mods\ModuleName\Levels\LevelName\Terrains&#xD;&#xA;Backup it for safety. Drag and drop it in the box below." HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Heightmap should be a grayscale image.  This tool works with bmp, jpg, png and gif formats. &#xD;&#xA;If you use png or gif, avoid transparency.&#xD;&#xA;If the size of the terrain is (x; y), the size of the heightmap should be (x/2 + 1; y/2 + 1). Example: 501x401." HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="grayMinHeightTextBox" Height="23" Margin="271,317,317,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="-1"/>
+                    <Label Content="Minimum height" HorizontalAlignment="Left" Margin="142,314,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="grayMaxHeightTextBox" Height="23" Margin="498,317,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="20"/>
+                    <Label Content="Maximum height" HorizontalAlignment="Left" Margin="368,314,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Adjust the size of your mountains below. This is equivalent to the &quot;strength&quot; of the terrain brush in the editor." HorizontalAlignment="Left" Margin="10,283,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="L3DT Import">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="l3dtGenerateButton" Content="Generate" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="L3dtGenerate_Click" Grid.Column="1"/>
+                    <TextBox x:Name="l3dtTextBox" Height="23" Margin="176,225,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Drop="L3dtTextBox_Drop" PreviewDragOver="L3dtTextBox_PreviewDragOver"/>
+                    <Label Content="L3DT File" HorizontalAlignment="Left" Margin="102,222,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.8,0.435"/>
+                    <Button x:Name="l3dtTextBoxBrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="0,226,10,0" VerticalAlignment="Top" Width="75" Click="L3dtFileBrowse_Click"/>
+                    <TextBox x:Name="l3dtDosTextBox" Height="23" Margin="176,109,90,0" VerticalAlignment="Top" PreviewDragOver="L3dtDosTextBox_PreviewDragOver" Drop="L3dtDosTextBox_Drop"/>
+                    <Label Content="DOS Terrain File" HorizontalAlignment="Left" Margin="76,106,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="l3dtDosTextBoxBrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="0,110,10,0" VerticalAlignment="Top" Width="75" Click="L3dtDosBrowse_Click" RenderTransformOrigin="1.373,0.65"/>
+                    <Label Content="Create a new terrain with the Divinity Engine. Use even numbers for size. Example: 1000x800.&#xD;&#xA;Save it and close the editor.&#xD;&#xA;Locate the &quot;Terrain__000.data&quot; file or whatever name you gave it. It should be in this path:&#xD;&#xA;\Divinity - Original Sin\Data\Editor\Mods\ModuleName\Levels\LevelName\Terrains&#xD;&#xA;Backup it for safety. Drag and drop it in the box below." HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Heightmap should be a L3DT heightmap.  This tool works with hff, hf2, hfz and hf2.gz formats. &#xA;If the size of the terrain is (x; y), the size of the heightmap should be (x/2 + 1; y/2 + 1). Example: 501x401." HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="l3dtMinHeightTextBox" Height="23" Margin="271,317,317,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="-1"/>
+                    <Label Content="Minimum height" HorizontalAlignment="Left" Margin="142,314,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <TextBox x:Name="l3dtMaxHeightTextBox" Height="23" Margin="498,317,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="20"/>
+                    <Label Content="Maximum height" HorizontalAlignment="Left" Margin="368,314,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Adjust the size of your mountains below. This is equivalent to the &quot;strength&quot; of the terrain brush in the editor." HorizontalAlignment="Left" Margin="10,283,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>

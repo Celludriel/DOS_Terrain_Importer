@@ -7,13 +7,13 @@
             <ColumnDefinition Width="85*"/>
             <ColumnDefinition Width="237*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="generateButton" Content="Generate" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="Button_Click" Grid.Column="1"/>
-        <TextBox x:Name="l3dtTextBox" Height="23" Margin="5.583,225,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Drop="l3dtTextBox_Drop" PreviewDragOver="l3dtTextBox_PreviewDragOver" Grid.Column="1"/>
+        <Button x:Name="l3dtGenerateButton" Content="Generate" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="L3dtGenerate_Click" Grid.Column="1"/>
+        <TextBox x:Name="l3dtTextBox" Height="23" Margin="5.583,225,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Drop="L3dtTextBox_Drop" PreviewDragOver="L3dtTextBox_PreviewDragOver" Grid.Column="1"/>
         <Label x:Name="l3dtTextBoxLabel" Content="L3DT map" HorizontalAlignment="Left" Margin="102,222,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="l3dtTextBoxBrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="0,226,10,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2" Grid.Column="1"/>
-        <TextBox x:Name="dosTextBox" Height="23" Margin="5.583,109,90,0" VerticalAlignment="Top" PreviewDragOver="dosTextBox_PreviewDragOver" Drop="dosTextBox_Drop" Grid.Column="1"/>
+        <Button x:Name="l3dtTextBoxBrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="0,226,10,0" VerticalAlignment="Top" Width="75" Click="L3dtFileBrowse_Click" Grid.Column="1"/>
+        <TextBox x:Name="dosTextBox" Height="23" Margin="5.583,109,90,0" VerticalAlignment="Top" PreviewDragOver="L3dtDosTextBox_PreviewDragOver" Drop="L3dtDosTextBox_Drop" Grid.Column="1"/>
         <Label x:Name="dosTextBoxLabel" Content="DOS Terrain File" HorizontalAlignment="Left" Margin="76,106,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="dosTextBoxBrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="0,110,10,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1" Grid.Column="1"/>
+        <Button x:Name="dosTextBoxBrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="0,110,10,0" VerticalAlignment="Top" Width="75" Click="L3dtDosBrowse_Click" Grid.Column="1"/>
         <Label Content="Create a new terrain with the Divinity Engine. Use even numbers for size. Example: 1000x800.&#xD;&#xA;Save it and close the editor.&#xD;&#xA;Locate the &quot;Terrain__000.data&quot; file or whatever name you gave it. It should be in this path:&#xD;&#xA;\Divinity - Original Sin\Data\Editor\Mods\ModuleName\Levels\LevelName\Terrains&#xD;&#xA;Backup it for safety. Drag and drop it in the box below." HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <Label Content="Heightmap should be a grayscale image.  This tool works with bmp, jpg, png and gif formats. &#xD;&#xA;If you use png or gif, avoid transparency.&#xD;&#xA;If the size of the terrain is (x; y), the size of the heightmap should be (x/2 + 1; y/2 + 1). Example: 501x401." HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <TextBox x:Name="minHeightTextBox" Height="23" Margin="101,317,317,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="-1" Grid.Column="1"/>

@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DosTerrainImporter.Model;
+using DosTerrainImporter.Importer;
 
 namespace DosTerrainImporter
 {
@@ -23,19 +24,18 @@ namespace DosTerrainImporter
     /// </summary>
     public partial class MainWindow : Window
     {
-        Microsoft.Win32.OpenFileDialog dlg1 = new Microsoft.Win32.OpenFileDialog();
-        Microsoft.Win32.OpenFileDialog dlg2 = new Microsoft.Win32.OpenFileDialog();
+        Microsoft.Win32.OpenFileDialog l3dtDosBrowseDialog = new Microsoft.Win32.OpenFileDialog();
+        Microsoft.Win32.OpenFileDialog l3dtFileBrowseDialog = new Microsoft.Win32.OpenFileDialog();
         
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void L3dtGenerate_Click(object sender, RoutedEventArgs e)
         {
             float minHeight;
             float maxHeight;
-            HeightMap heightMap = null;
             string dosFileName = dosTextBox.Text;
             string l3dtFileName = l3dtTextBox.Text;
 
@@ -61,89 +61,40 @@ namespace DosTerrainImporter
                 return;
             }
 
-
-            heightMap = loadHeightMap(l3dtFileName);
-            if (heightMap == null)
+            try
             {
-                MessageBox.Show("Error: Failed to load heightmap");
+                L3dtImporter importer = new L3dtImporter();
+                importer.importL3dt(dosFileName, l3dtFileName, minHeight, maxHeight);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
                 return;
             }
 
-            byte[] dosBinaryFileContent = File.ReadAllBytes(dosFileName);
-            using (MemoryStream dosBinaryMemoryStream = new MemoryStream(dosBinaryFileContent))
-            {
-                using (BinaryReader dosBinaryReader = new BinaryReader(dosBinaryMemoryStream))
-                {
-                    UInt32 heightmapSize = dosBinaryReader.ReadUInt32();
-                    using (BinaryWriter bw = new BinaryWriter(File.Open(dosFileName, FileMode.Create)))
-                    {
-                        bw.Write(heightmapSize);
-                        int width = heightMap.Width;
-                        int height = heightMap.Height;
-                        float minElevation = heightMap.getMinimumElevation();
-                        float maxElevation = heightMap.getMaximumElevation();
-                        for (int j = 0; j < height; j++)
-                        {
-                            for (int i = 0; i < width; i++)
-                            {
-                                dosBinaryReader.ReadSingle();
-                                float pixelHeight = heightMap.GetHeight(width - 1 - i, j);
-                                float baseValue = pixelHeight / (maxElevation - minElevation);
-                                pixelHeight = baseValue * (maxHeight - minHeight);
-                                bw.Write(pixelHeight);
-                            }
-                        }
-                        while (true)
-                        {
-                            try
-                            {
-                                bw.Write(dosBinaryReader.ReadUInt32());
-                            }
-                            catch (Exception ex)
-                            {
-                                break;
-                            }
-                        }
-                        MessageBox.Show("Done");
-                    }
-                }
-            }
         }
 
-        private HeightMap loadHeightMap(string l3dtFileName)
+        private void L3dtDosBrowse_Click(object sender, RoutedEventArgs e)
         {
-            if (l3dtFileName.EndsWith("hfz") || l3dtFileName.EndsWith("hf2.gz") || l3dtFileName.EndsWith("hf2"))
-            {
-                return (HeightMap) new Hf2HeightMap(l3dtFileName);
-            }
-            else if (l3dtFileName.EndsWith("hff"))
-            {
-                return (HeightMap) new HffHeightMap(l3dtFileName);
-            }
-            return null;
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            Nullable<bool> result = dlg1.ShowDialog();
+            Nullable<bool> result = l3dtDosBrowseDialog.ShowDialog();
             if (result == true)
             {
-                string filename = dlg1.FileName;
+                string filename = l3dtDosBrowseDialog.FileName;
                 dosTextBox.Text = filename;
             }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void L3dtFileBrowse_Click(object sender, RoutedEventArgs e)
         {
-            Nullable<bool> result = dlg2.ShowDialog();
+            Nullable<bool> result = l3dtFileBrowseDialog.ShowDialog();
             if (result == true)
             {
-                string filename = dlg2.FileName;
+                string filename = l3dtFileBrowseDialog.FileName;
                 l3dtTextBox.Text = filename;
             }
         }
 
-        private void dosTextBox_Drop(object sender, DragEventArgs e)
+        private void L3dtDosTextBox_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -152,12 +103,12 @@ namespace DosTerrainImporter
             }
         }
 
-        private void dosTextBox_PreviewDragOver(object sender, DragEventArgs e)
+        private void L3dtDosTextBox_PreviewDragOver(object sender, DragEventArgs e)
         {
             e.Handled = true;
         }
 
-        private void l3dtTextBox_Drop(object sender, DragEventArgs e)
+        private void L3dtTextBox_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -166,7 +117,7 @@ namespace DosTerrainImporter
             }
         }
 
-        private void l3dtTextBox_PreviewDragOver(object sender, DragEventArgs e)
+        private void L3dtTextBox_PreviewDragOver(object sender, DragEventArgs e)
         {
             e.Handled = true;
         }

@@ -52,6 +52,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DosTerrainLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\DosTerrainLib.dll</HintPath>
+    </Reference>
     <Reference Include="L3dtFileManager">
       <HintPath>libs\L3dtFileManager.dll</HintPath>
     </Reference>
@@ -148,6 +152,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Testdata\grayscaletest.bmp" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Libs\DosTerrainLib.dll" />
+    <Content Include="Libs\DosTerrainLib.pdb" />
+    <Content Include="Libs\L3dtFileManager.dll" />
+    <Content Include="Libs\L3dtFileManager.pdb" />
+    <Content Include="Libs\MiscUtil.dll" />
+    <Content Include="Libs\nunit.framework.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

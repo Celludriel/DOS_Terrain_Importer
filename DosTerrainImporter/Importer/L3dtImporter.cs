@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using DosTerrainLib.Model;
+using DosTerrainLib.Helper;
+using DosTerrainLib;
 
 namespace DosTerrainImporter.Importer
 {
@@ -16,44 +19,23 @@ namespace DosTerrainImporter.Importer
             HeightMap heightMap = loadHeightMap(l3dtFileName);
             if (heightMap != null)
             {
-                byte[] dosBinaryFileContent = File.ReadAllBytes(dosFileName);
-                using (MemoryStream dosBinaryMemoryStream = new MemoryStream(dosBinaryFileContent))
+                UInt32 width = (UInt32)heightMap.Width;
+                UInt32 height = (UInt32)heightMap.Height;
+                DosTerrain dosTerrain = new DosTerrainParser().ReadDosTerrain((width*2) - 2, (height*2) - 2, dosFileName);
+                float minElevation = heightMap.getMinimumElevation();
+                float maxElevation = heightMap.getMaximumElevation();
+                for (int y = 0; y < height; y++)
                 {
-                    using (BinaryReader dosBinaryReader = new BinaryReader(dosBinaryMemoryStream))
+                    for (int x = 0; x < width; x++)
                     {
-                        UInt32 heightmapSize = dosBinaryReader.ReadUInt32();
-                        using (BinaryWriter bw = new BinaryWriter(File.Open(dosFileName, FileMode.Create)))
-                        {
-                            bw.Write(heightmapSize);
-                            int width = heightMap.Width;
-                            int height = heightMap.Height;
-                            float minElevation = heightMap.getMinimumElevation();
-                            float maxElevation = heightMap.getMaximumElevation();
-                            for (int j = 0; j < height; j++)
-                            {
-                                for (int i = 0; i < width; i++)
-                                {
-                                    dosBinaryReader.ReadSingle();
-                                    float pixelHeight = heightMap.GetHeight(width - 1 - i, j);
-                                    float baseValue = pixelHeight / (maxElevation - minElevation);
-                                    pixelHeight = baseValue * (maxHeight - minHeight);
-                                    bw.Write(pixelHeight);
-                                }
-                            }
-                            while (true)
-                            {
-                                try
-                                {
-                                    bw.Write(dosBinaryReader.ReadUInt32());
-                                }
-                                catch (Exception ex)
-                                {
-                                    break;
-                                }
-                            }
-                        }
+                        float pixelHeight = heightMap.GetHeight(x, y);
+                        float baseValue = pixelHeight / (maxElevation - minElevation);
+                        pixelHeight = baseValue * (maxHeight - minHeight);
+                        HeigthMapEditor.SetHeightAt(dosTerrain, (uint)x, (uint)y, pixelHeight);
                     }
                 }
+                DosTerrainWriter writer = new DosTerrainWriter();
+                writer.WriteDosTerrain(dosTerrain, dosFileName);
             }
             else
             {

@@ -9,38 +9,59 @@ using System.Windows;
 using DosTerrainLib.Model;
 using DosTerrainLib.Helper;
 using DosTerrainLib;
+using System.ComponentModel;
 
 namespace DosTerrainImporter.Importer
 {
-    class L3dtImporter
+    public class L3dtImporter : TerrainImporter
     {
-        public void importL3dt(String dosFileName, String l3dtFileName, float minHeight, float maxHeight)
+        private HeightMap heightMap = null;
+        private DosTerrain dosTerrain = null;
+        private String terrainFileName;
+        private float minHeight;
+        private float maxHeight;
+
+        public L3dtImporter(String terrainFileName, String sourceFileName, float minHeight, float maxHeight)
         {
-            HeightMap heightMap = loadHeightMap(l3dtFileName);
-            if (heightMap != null)
-            {
-                UInt32 width = (UInt32)heightMap.Width;
-                UInt32 height = (UInt32)heightMap.Height;
-                DosTerrain dosTerrain = new DosTerrainParser().ReadDosTerrain((width*2) - 2, (height*2) - 2, dosFileName);
-                float minElevation = heightMap.getMinimumElevation();
-                float maxElevation = heightMap.getMaximumElevation();
-                for (int y = 0; y < height; y++)
-                {
-                    for (int x = 0; x < width; x++)
-                    {
-                        float pixelHeight = heightMap.GetHeight(x, y);
-                        float baseValue = pixelHeight / (maxElevation - minElevation);
-                        pixelHeight = baseValue * (maxHeight - minHeight);
-                        HeigthMapEditor.SetHeightAt(dosTerrain, (uint)x, (uint)y, pixelHeight);
-                    }
-                }
-                DosTerrainWriter writer = new DosTerrainWriter();
-                writer.WriteDosTerrain(dosTerrain, dosFileName);
-            }
-            else
+            this.minHeight = minHeight;
+            this.maxHeight = maxHeight;
+            this.terrainFileName = terrainFileName;
+            this.heightMap = loadHeightMap(sourceFileName);
+            if (heightMap == null)
             {
                 throw new Exception("Error: Failed to load heightmap");
             }
+            dosTerrain = new DosTerrainParser().ReadDosTerrain(((UInt32)heightMap.Width * 2) - 2, ((UInt32)heightMap.Height * 2) - 2, terrainFileName);
+        }
+
+        public override void execute(object sender, DoWorkEventArgs e)
+        {
+            UInt32 width = (UInt32)heightMap.Width;
+            UInt32 height = (UInt32)heightMap.Height;
+            DosTerrain dosTerrain = new DosTerrainParser().ReadDosTerrain((width * 2) - 2, (height * 2) - 2, terrainFileName);
+            float minElevation = heightMap.getMinimumElevation();
+            float maxElevation = heightMap.getMaximumElevation();
+            for (int y = 0, counter=1; y < height; y++)
+            {
+                for (int x = 0; x < width; x++, counter++)
+                {
+                    float pixelHeight = heightMap.GetHeight(x, y);
+                    float baseValue = pixelHeight / (maxElevation - minElevation);
+                    pixelHeight = baseValue * (maxHeight - minHeight);
+                    HeigthMapEditor.SetHeightAt(dosTerrain, (uint)x, (uint)y, pixelHeight);
+                    if (counter % 100 == 0 || counter == getMaximumWriteOperations())
+                    {
+                        (sender as BackgroundWorker).ReportProgress(counter);
+                    }
+                }
+            }
+            DosTerrainWriter writer = new DosTerrainWriter();
+            writer.WriteDosTerrain(dosTerrain, terrainFileName);
+        }
+
+        public override int getMaximumWriteOperations()
+        {
+            return dosTerrain.HeightMapData.Length;
         }
 
         private HeightMap loadHeightMap(string l3dtFileName)

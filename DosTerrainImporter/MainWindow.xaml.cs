@@ -27,7 +27,7 @@ namespace DosTerrainImporter
         Microsoft.Win32.OpenFileDialog l3dtDosBrowseDialog = new Microsoft.Win32.OpenFileDialog();
         Microsoft.Win32.OpenFileDialog l3dtFileBrowseDialog = new Microsoft.Win32.OpenFileDialog();
         Microsoft.Win32.OpenFileDialog grayDosBrowseDialog = new Microsoft.Win32.OpenFileDialog();
-        Microsoft.Win32.OpenFileDialog grayFileBrowseDialog = new Microsoft.Win32.OpenFileDialog();        
+        Microsoft.Win32.OpenFileDialog grayFileBrowseDialog = new Microsoft.Win32.OpenFileDialog();
 
         public MainWindow()
         {
@@ -65,8 +65,10 @@ namespace DosTerrainImporter
 
             try
             {
-                L3dtImporter importer = new L3dtImporter();
-                importer.importL3dt(dosFileName, l3dtFileName, minHeight, maxHeight);
+                L3dtImporter importer = new L3dtImporter(dosFileName, l3dtFileName, minHeight, maxHeight);
+                ProcessWindow processWindow = new ProcessWindow(importer);
+                processWindow.Owner = this;
+                processWindow.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -154,8 +156,10 @@ namespace DosTerrainImporter
 
             try
             {
-                GrayScaleImporter importer = new GrayScaleImporter();
-                importer.importGreyScale(dosFileName, l3dtFileName, minHeight, maxHeight);
+                GrayScaleImporter importer = new GrayScaleImporter(dosFileName, l3dtFileName, minHeight, maxHeight);
+                ProcessWindow processWindow = new ProcessWindow(importer);
+                processWindow.Owner = this;
+                processWindow.ShowDialog();
             }
             catch (Exception ex)
             {

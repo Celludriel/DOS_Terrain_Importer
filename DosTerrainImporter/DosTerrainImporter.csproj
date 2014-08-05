@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\HeightMap.cs" />
+    <Compile Include="Model\HeightMapFactory.cs" />
     <Compile Include="Model\Hf2HeightMap.cs" />
     <Compile Include="Model\HffHeightMap.cs" />
     <Compile Include="ProcessWindow.xaml.cs">

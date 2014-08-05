@@ -10,13 +10,15 @@ using DosTerrainLib.Model;
 using DosTerrainLib.Helper;
 using DosTerrainLib;
 using System.ComponentModel;
+using L3dtFileManager.L3dt;
 
 namespace DosTerrainImporter.Importer
 {
     public class L3dtImporter : TerrainImporter
     {
-        private HeightMap heightMap = null;
+        private L3dtFile l3dtProject = null;
         private DosTerrain dosTerrain = null;
+        private HeightMap heightMap = null;
         private String terrainFileName;
         private float minHeight;
         private float maxHeight;
@@ -26,11 +28,12 @@ namespace DosTerrainImporter.Importer
             this.minHeight = minHeight;
             this.maxHeight = maxHeight;
             this.terrainFileName = terrainFileName;
-            this.heightMap = loadHeightMap(sourceFileName);
-            if (heightMap == null)
+            this.l3dtProject = LoadL3dtProject(sourceFileName);
+            if (l3dtProject == null)
             {
-                throw new Exception("Error: Failed to load heightmap");
+                throw new Exception("Error: Failed to load L3DT project");
             }
+            this.heightMap = HeightMapFactory.GetInstance(l3dtProject);
             dosTerrain = new DosTerrainParser().ReadDosTerrain(((UInt32)heightMap.Width * 2) - 2, ((UInt32)heightMap.Height * 2) - 2, terrainFileName);
         }
 
@@ -64,17 +67,10 @@ namespace DosTerrainImporter.Importer
             return dosTerrain.HeightMapData.Length;
         }
 
-        private HeightMap loadHeightMap(string l3dtFileName)
+        private L3dtFile LoadL3dtProject(string l3dtFileName)
         {
-            if (l3dtFileName.EndsWith("hfz") || l3dtFileName.EndsWith("hf2.gz") || l3dtFileName.EndsWith("hf2"))
-            {
-                return (HeightMap)new Hf2HeightMap(l3dtFileName);
-            }
-            else if (l3dtFileName.EndsWith("hff"))
-            {
-                return (HeightMap)new HffHeightMap(l3dtFileName);
-            }
-            return null;
+            L3dtFileManager.L3dtFileManager manager = new L3dtFileManager.L3dtFileManager();
+            return manager.loadL3dtProject(l3dtFileName);
         }
     }
 }

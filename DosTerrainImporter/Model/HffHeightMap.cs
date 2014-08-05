@@ -24,17 +24,9 @@ namespace DosTerrainImporter.Model
             }
         }
 
-        public HffHeightMap(string filename)
+        public HffHeightMap(HffFile hffFile)
         {
-            L3dtFileManager.L3dtFileManager hfzManager = new L3dtFileManager.L3dtFileManager();
-            if (filename.EndsWith(".hff"))
-            {
-                this.file = hfzManager.loadHffFile(filename);
-            }
-            else
-            {
-                throw new Exception("Not a Hff map file");
-            }
+            this.file = hffFile;
         }
 
         public override float getMaximumElevation()

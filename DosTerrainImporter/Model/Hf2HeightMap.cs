@@ -11,21 +11,9 @@ namespace DosTerrainImporter.Model
     {
         private HfzFile file;
 
-        public Hf2HeightMap(string filename)
+        public Hf2HeightMap(HfzFile hfzFile)
         {
-            L3dtFileManager.L3dtFileManager hfzManager = new L3dtFileManager.L3dtFileManager();
-            if (filename.EndsWith(".hf2.gz") || filename.EndsWith(".hfz"))
-            {
-                this.file = hfzManager.loadHfzFile(filename, FileFormat.COMPRESSED);
-            }
-            else if (filename.EndsWith(".hf2"))
-            {
-                this.file = hfzManager.loadHfzFile(filename, FileFormat.UNCOMPRESSED);
-            }
-            else
-            {
-                throw new Exception("Not a HF2 map file");
-            }
+            this.file = hfzFile;
         }
 
         public override int Width

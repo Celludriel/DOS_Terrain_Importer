@@ -107,6 +107,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\AmfAttributeMap.cs" />
     <Compile Include="Model\HeightMap.cs" />
     <Compile Include="Model\HeightMapFactory.cs" />
     <Compile Include="Model\Hf2HeightMap.cs" />

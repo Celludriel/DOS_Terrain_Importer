@@ -65,7 +65,7 @@ namespace DosTerrainImporter
 
             try
             {
-                L3dtImporter importer = new L3dtImporter(dosFileName, l3dtFileName, minHeight, maxHeight);
+                L3dtImporter importer = new L3dtImporter(dosFileName, l3dtFileName, minHeight, maxHeight, true);
                 ProcessWindow processWindow = new ProcessWindow(importer);
                 processWindow.Owner = this;
                 processWindow.ShowDialog();

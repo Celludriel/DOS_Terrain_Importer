@@ -7,28 +7,17 @@ using L3dtFileManager.Amf;
 
 namespace DosTerrainImporter.Model
 {
-    public class AmfAttributeMap : AttributeMap
+    public class AmfAttributeMap
     {
         private AmfFile file;
+        Dictionary<byte,byte> landType = new Dictionary<byte, byte>();
 
-        public AmfAttributeMap(string filename)
+        public AmfAttributeMap(AmfFile amfFile)
         {
-            L3dtFileManager.L3dtFileManager manager = new L3dtFileManager.L3dtFileManager();
-            if (filename.EndsWith(".amf.gz"))
-            {
-                this.file = manager.loadAmfFile(filename, FileFormat.COMPRESSED);
-            }
-            else if (filename.EndsWith(".amf"))
-            {
-                this.file = manager.loadAmfFile(filename, FileFormat.UNCOMPRESSED);
-            }
-            else
-            {
-                throw new Exception("Not a AMF map file");
-            }
+            this.file = amfFile;          
         }
 
-        public override int Height
+        public int Height
         {
             get
             {
@@ -36,7 +25,7 @@ namespace DosTerrainImporter.Model
             }
         }
 
-        public override int Width
+        public int Width
         {
             get
             {
@@ -44,10 +33,16 @@ namespace DosTerrainImporter.Model
             }
         }
 
-        public string GetPixel(int x, int y)
+        public byte GetClimateIdAtPixel(int x, int y)
         {
             AmfPixelInfo pixel = this.file.getPixelAt((uint)x + 1, (uint)y + 1);
-            return pixel.climateId + "-" + pixel.landTypeId;
+            return pixel.climateId;
+        }
+
+        public byte GetLandTypeIdAtPixel(int x, int y)
+        {
+            AmfPixelInfo pixel = this.file.getPixelAt((uint)x + 1, (uint)y + 1);
+            return pixel.landTypeId;
         }
 
         public List<String> getAllLandTypes()

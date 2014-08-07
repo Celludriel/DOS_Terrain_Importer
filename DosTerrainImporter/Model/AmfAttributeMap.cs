@@ -35,13 +35,13 @@ namespace DosTerrainImporter.Model
 
         public byte GetClimateIdAtPixel(int x, int y)
         {
-            AmfPixelInfo pixel = this.file.getPixelAt((uint)x + 1, (uint)y + 1);
+            AmfPixelInfo pixel = this.file.getPixelAt((uint)x, (uint)y);
             return pixel.climateId;
         }
 
         public byte GetLandTypeIdAtPixel(int x, int y)
         {
-            AmfPixelInfo pixel = this.file.getPixelAt((uint)x + 1, (uint)y + 1);
+            AmfPixelInfo pixel = this.file.getPixelAt((uint)x, (uint)y);
             return pixel.landTypeId;
         }
 

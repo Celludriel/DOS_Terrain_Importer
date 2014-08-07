@@ -39,41 +39,54 @@ namespace DosTerrainImporter.Importer
             }
             this.heightMap = HeightMapFactory.GetInstance(l3dtProject);
             this.attributeMap = new AmfAttributeMap(l3dtProject.AmfFile);
-            this.dosTerrain = new DosTerrainParser().ReadDosTerrain(((UInt32)heightMap.Width * 2) - 2, ((UInt32)heightMap.Height * 2) - 2, terrainFileName);
+            this.dosTerrain = new DosTerrainParser().ReadDosTerrain((UInt32)heightMap.Width, (UInt32)heightMap.Height, terrainFileName);
         }
 
         public override void execute(object sender, DoWorkEventArgs e)
         {
             UInt32 width = (UInt32)heightMap.Width;
             UInt32 height = (UInt32)heightMap.Height;
+
+            UInt32 heightMapWidth = (UInt32)(heightMap.Width / 2) + 1;
+            UInt32 heightMapHeight = (UInt32)(heightMap.Height / 2) + 1;
+
             float minElevation = heightMap.getMinimumElevation();
             float maxElevation = heightMap.getMaximumElevation();
+            
             for (int y = 0, counter=1; y < height; y++)
             {
                 for (int x = 0; x < width; x++, counter++)
                 {
+                    int modX = Convert.ToInt32((x / Convert.ToSingle(width)) * heightMapWidth);
+                    int modY = Convert.ToInt32((y / Convert.ToSingle(height)) * heightMapHeight);
                     float pixelHeight = heightMap.GetHeight(x, y);
                     float baseValue = pixelHeight / (maxElevation - minElevation);
                     pixelHeight = baseValue * (maxHeight - minHeight);
-                    HeigthMapEditor.SetHeightAt(this.dosTerrain, (uint)x, (uint)y, pixelHeight);
-
+                    HeigthMapEditor.SetHeightAt(this.dosTerrain, (uint)modX, (uint)modY, pixelHeight);                   
+                    
                     if (texture)
                     {
                         uint landTypeId = attributeMap.GetLandTypeIdAtPixel(x, y);
-                        uint layerId = landTypeId-1;
-                        TextureLayerPage page = TextureLayerEditor.FindPageForCoordinate(this.dosTerrain, (uint)x, (uint)y);
-                        TextureLayerEditor.AddTextureLayerToPageIfNotExist(layerId, 0, page, this.dosTerrain.BackGroundData.ElementAt((int)page.PageNo));
-                        this.dosTerrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(this.dosTerrain, (uint)x, (uint)y, layerId, 127);
-                    }
-
-                    if (counter % 100 == 0 || counter == getMaximumWriteOperations())
-                    {
-                        (sender as BackgroundWorker).ReportProgress(counter);
+                        TextureCoordinate(x, y, landTypeId);
                     }
                 }
+
+                if (counter % 100 == 0 || counter == getMaximumWriteOperations())
+                {
+                    (sender as BackgroundWorker).ReportProgress(counter);
+                }
             }
+
             DosTerrainWriter writer = new DosTerrainWriter();
             writer.WriteDosTerrain(this.dosTerrain, terrainFileName);
+        }
+
+        private void TextureCoordinate(int x, int y, uint landTypeId)
+        {
+            uint layerId = landTypeId - 1;
+            TextureLayerPage page = TextureLayerEditor.FindPageForCoordinate(this.dosTerrain, (uint)x, (uint)y);
+            TextureLayerEditor.AddTextureLayerToPageIfNotExist(layerId, 0, page, this.dosTerrain.BackGroundData.ElementAt((int)page.PageNo));
+            this.dosTerrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(this.dosTerrain, (uint)x, (uint)y, layerId, 255);
         }
 
         public override int getMaximumWriteOperations()

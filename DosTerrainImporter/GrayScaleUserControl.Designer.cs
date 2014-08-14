@@ -45,7 +45,7 @@
             // 
             // grayDosTextBox
             // 
-            this.grayDosTextBox.Location = new System.Drawing.Point(101, 19);
+            this.grayDosTextBox.Location = new System.Drawing.Point(105, 19);
             this.grayDosTextBox.Name = "grayDosTextBox";
             this.grayDosTextBox.ReadOnly = true;
             this.grayDosTextBox.Size = new System.Drawing.Size(426, 20);
@@ -53,7 +53,7 @@
             // 
             // grayBitmapTextBox
             // 
-            this.grayBitmapTextBox.Location = new System.Drawing.Point(101, 48);
+            this.grayBitmapTextBox.Location = new System.Drawing.Point(105, 49);
             this.grayBitmapTextBox.Name = "grayBitmapTextBox";
             this.grayBitmapTextBox.ReadOnly = true;
             this.grayBitmapTextBox.Size = new System.Drawing.Size(426, 20);
@@ -61,7 +61,7 @@
             // 
             // grayMinHeightTextBox
             // 
-            this.grayMinHeightTextBox.Location = new System.Drawing.Point(101, 74);
+            this.grayMinHeightTextBox.Location = new System.Drawing.Point(105, 75);
             this.grayMinHeightTextBox.Name = "grayMinHeightTextBox";
             this.grayMinHeightTextBox.Size = new System.Drawing.Size(100, 20);
             this.grayMinHeightTextBox.TabIndex = 2;
@@ -69,7 +69,7 @@
             // 
             // grayMaxHeightTextBox
             // 
-            this.grayMaxHeightTextBox.Location = new System.Drawing.Point(427, 74);
+            this.grayMaxHeightTextBox.Location = new System.Drawing.Point(431, 75);
             this.grayMaxHeightTextBox.Name = "grayMaxHeightTextBox";
             this.grayMaxHeightTextBox.Size = new System.Drawing.Size(100, 20);
             this.grayMaxHeightTextBox.TabIndex = 3;
@@ -77,7 +77,7 @@
             // 
             // GrayDosBrowse
             // 
-            this.GrayDosBrowse.Location = new System.Drawing.Point(534, 17);
+            this.GrayDosBrowse.Location = new System.Drawing.Point(537, 17);
             this.GrayDosBrowse.Name = "GrayDosBrowse";
             this.GrayDosBrowse.Size = new System.Drawing.Size(75, 23);
             this.GrayDosBrowse.TabIndex = 4;
@@ -87,7 +87,7 @@
             // 
             // GrayBitmapBrowse
             // 
-            this.GrayBitmapBrowse.Location = new System.Drawing.Point(534, 46);
+            this.GrayBitmapBrowse.Location = new System.Drawing.Point(537, 47);
             this.GrayBitmapBrowse.Name = "GrayBitmapBrowse";
             this.GrayBitmapBrowse.Size = new System.Drawing.Size(75, 23);
             this.GrayBitmapBrowse.TabIndex = 5;
@@ -97,7 +97,7 @@
             // 
             // GrayGenerate
             // 
-            this.GrayGenerate.Location = new System.Drawing.Point(534, 100);
+            this.GrayGenerate.Location = new System.Drawing.Point(537, 101);
             this.GrayGenerate.Name = "GrayGenerate";
             this.GrayGenerate.Size = new System.Drawing.Size(75, 23);
             this.GrayGenerate.TabIndex = 6;
@@ -117,7 +117,7 @@
             // GrayBitmapFileLabel
             // 
             this.GrayBitmapFileLabel.AutoSize = true;
-            this.GrayBitmapFileLabel.Location = new System.Drawing.Point(37, 51);
+            this.GrayBitmapFileLabel.Location = new System.Drawing.Point(41, 51);
             this.GrayBitmapFileLabel.Name = "GrayBitmapFileLabel";
             this.GrayBitmapFileLabel.Size = new System.Drawing.Size(58, 13);
             this.GrayBitmapFileLabel.TabIndex = 8;
@@ -126,7 +126,7 @@
             // grayMinHeightLabel
             // 
             this.grayMinHeightLabel.AutoSize = true;
-            this.grayMinHeightLabel.Location = new System.Drawing.Point(41, 77);
+            this.grayMinHeightLabel.Location = new System.Drawing.Point(41, 78);
             this.grayMinHeightLabel.Name = "grayMinHeightLabel";
             this.grayMinHeightLabel.Size = new System.Drawing.Size(58, 13);
             this.grayMinHeightLabel.TabIndex = 9;
@@ -135,7 +135,7 @@
             // GrayMaxHeightLabel
             // 
             this.GrayMaxHeightLabel.AutoSize = true;
-            this.GrayMaxHeightLabel.Location = new System.Drawing.Point(360, 77);
+            this.GrayMaxHeightLabel.Location = new System.Drawing.Point(364, 78);
             this.GrayMaxHeightLabel.Name = "GrayMaxHeightLabel";
             this.GrayMaxHeightLabel.Size = new System.Drawing.Size(61, 13);
             this.GrayMaxHeightLabel.TabIndex = 10;
@@ -143,7 +143,7 @@
             // 
             // GrayCancelButton
             // 
-            this.GrayCancelButton.Location = new System.Drawing.Point(452, 100);
+            this.GrayCancelButton.Location = new System.Drawing.Point(456, 101);
             this.GrayCancelButton.Name = "GrayCancelButton";
             this.GrayCancelButton.Size = new System.Drawing.Size(75, 23);
             this.GrayCancelButton.TabIndex = 11;
@@ -153,7 +153,7 @@
             // 
             // GrayProgressBar
             // 
-            this.GrayProgressBar.Location = new System.Drawing.Point(6, 129);
+            this.GrayProgressBar.Location = new System.Drawing.Point(9, 130);
             this.GrayProgressBar.Name = "GrayProgressBar";
             this.GrayProgressBar.Size = new System.Drawing.Size(603, 23);
             this.GrayProgressBar.TabIndex = 12;

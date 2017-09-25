@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows;
+
 
 namespace DosTerrainImporter.Importer
 {
-    class GrayScaleImporter : TerrainImporter
+    class Dos2GrayScaleImporter : TerrainImporter
     {
         Bitmap bmp = null;
         String terrainFileName = null;
         float minHeight;
         float maxHeight;
 
-        public GrayScaleImporter(String terrainFileName, String sourceFileName, float minHeight, float maxHeight)
+        public Dos2GrayScaleImporter(String terrainFileName, String sourceFileName, float minHeight, float maxHeight)
         {
             this.bmp = new Bitmap(sourceFileName);
             this.terrainFileName = terrainFileName;

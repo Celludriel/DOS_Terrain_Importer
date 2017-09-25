@@ -25,7 +25,9 @@ namespace DosTerrainImporter
 
         private void MainL3dtButton_Click(object sender, EventArgs e)
         {
-
+            Panel targetPanel = ((this.Parent) as Panel);
+            targetPanel.Controls.Clear();
+            targetPanel.Controls.Add(new Dos2GrayScaleUserControl());
         }
     }
 }

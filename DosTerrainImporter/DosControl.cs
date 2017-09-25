@@ -20,7 +20,7 @@ namespace DosTerrainImporter
         {
             Panel targetPanel = ((this.Parent) as Panel);
             targetPanel.Controls.Clear();
-            targetPanel.Controls.Add(new GrayScaleUserControl());
+            targetPanel.Controls.Add(new DosGrayScaleUserControl());
         }
 
         private void MainL3dtButton_Click(object sender, EventArgs e)

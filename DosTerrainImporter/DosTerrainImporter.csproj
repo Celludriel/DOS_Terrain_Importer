@@ -82,11 +82,17 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GrayScaleUserControl.cs">
+    <Compile Include="Dos2GrayScaleUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GrayScaleUserControl.Designer.cs">
-      <DependentUpon>GrayScaleUserControl.cs</DependentUpon>
+    <Compile Include="Dos2GrayScaleUserControl.Designer.cs">
+      <DependentUpon>Dos2GrayScaleUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DosGrayScaleUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DosGrayScaleUserControl.Designer.cs">
+      <DependentUpon>DosGrayScaleUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Importer\Dos2GrayScaleImporter.cs" />
     <Compile Include="Importer\DosGrayScaleImporter.cs" />
@@ -137,11 +143,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Dos2GrayScaleUserControl.resx">
+      <DependentUpon>Dos2GrayScaleUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameSelector.resx">
       <DependentUpon>GameSelector.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GrayScaleUserControl.resx">
-      <DependentUpon>GrayScaleUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="DosGrayScaleUserControl.resx">
+      <DependentUpon>DosGrayScaleUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="L3dtUserControl.resx">
       <DependentUpon>L3dtUserControl.cs</DependentUpon>

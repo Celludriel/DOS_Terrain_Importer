@@ -103,6 +103,7 @@
             this.GrayGenerate.TabIndex = 19;
             this.GrayGenerate.Text = "Generate";
             this.GrayGenerate.UseVisualStyleBackColor = true;
+            this.GrayGenerate.Click += new System.EventHandler(this.GrayGenerate_Click);
             // 
             // GrayBitmapBrowse
             // 
@@ -112,6 +113,7 @@
             this.GrayBitmapBrowse.TabIndex = 18;
             this.GrayBitmapBrowse.Text = "...";
             this.GrayBitmapBrowse.UseVisualStyleBackColor = true;
+            this.GrayBitmapBrowse.Click += new System.EventHandler(this.GrayBitmapBrowse_Click);
             // 
             // GrayDosBrowse
             // 
@@ -121,6 +123,7 @@
             this.GrayDosBrowse.TabIndex = 17;
             this.GrayDosBrowse.Text = "...";
             this.GrayDosBrowse.UseVisualStyleBackColor = true;
+            this.GrayDosBrowse.Click += new System.EventHandler(this.GrayDosBrowse_Click);
             // 
             // grayMaxHeightTextBox
             // 

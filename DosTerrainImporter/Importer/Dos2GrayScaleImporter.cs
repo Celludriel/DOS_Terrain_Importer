@@ -9,38 +9,32 @@ namespace DosTerrainImporter.Importer
     class Dos2GrayScaleImporter : TerrainImporter
     {
         Bitmap bmp = null;
-        String terrainFileName = null;
+        String patchFileName = null;
         float minHeight;
         float maxHeight;
+        int maxWriteOperations = 0;
 
-        public Dos2GrayScaleImporter(String terrainFileName, String sourceFileName, float minHeight, float maxHeight)
+        public Dos2GrayScaleImporter(String patchFileName, String bitmapSourceFile, float minHeight, float maxHeight)
         {
-            this.bmp = new Bitmap(sourceFileName);
-            this.terrainFileName = terrainFileName;
+            this.bmp = new Bitmap(bitmapSourceFile);
+            this.maxWriteOperations = getMaximumWriteOperations();
+            this.patchFileName = patchFileName;
             this.minHeight = minHeight;
             this.maxHeight = maxHeight;
         }
 
-        public override int getMaximumWriteOperations()
-        {
-            return bmp.Height * bmp.Width;
-        }
-
         public override void execute(object sender, DoWorkEventArgs e)
         {
-            byte[] fileContent = File.ReadAllBytes(terrainFileName);
-            using (MemoryStream ms = new MemoryStream(fileContent))
+            byte[] patchFileContents = File.ReadAllBytes(patchFileName);
+            using (MemoryStream ms = new MemoryStream(patchFileContents))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    UInt32 heightmapSize = br.ReadUInt32();
-                    if (bmp.Width * bmp.Height * 4 != heightmapSize)
+                    //Read Pversion4 and Patch version
+                    byte[] fileHeaderInformation = br.ReadBytes(12);                    
+                    using (BinaryWriter bw = new BinaryWriter(File.Open(patchFileName, FileMode.Create)))
                     {
-                        throw new Exception("Error: The heightmap doesn't have a correct size.");
-                    }
-                    using (BinaryWriter bw = new BinaryWriter(File.Open(terrainFileName, FileMode.Create)))
-                    {
-                        bw.Write(heightmapSize);
+                        bw.Write(fileHeaderInformation);
                         for (int j = 0, counter = 1; j < bmp.Height; j++)
                         {
                             for (int i = 0; i < bmp.Width; i++, counter++)
@@ -51,7 +45,7 @@ namespace DosTerrainImporter.Importer
                                 v = v * (maxHeight - minHeight); // range [0; 25]
                                 v = v + minHeight; // range [-1; 24]
                                 bw.Write(v);
-                                if (counter % 100 == 0 || counter == getMaximumWriteOperations())
+                                if (counter % 100 == 0 || counter == this.maxWriteOperations)
                                 {
                                     (sender as BackgroundWorker).ReportProgress(counter);
                                 }
@@ -61,7 +55,7 @@ namespace DosTerrainImporter.Importer
                         {
                             try
                             {
-                                bw.Write(br.ReadUInt32());
+                                bw.Write(br.ReadByte());
                             }
                             catch (Exception)
                             {
@@ -71,6 +65,11 @@ namespace DosTerrainImporter.Importer
                     }
                 }
             }
+        }
+
+        public override int getMaximumWriteOperations()
+        {
+            return bmp.Height * bmp.Width;
         }
     }
 }

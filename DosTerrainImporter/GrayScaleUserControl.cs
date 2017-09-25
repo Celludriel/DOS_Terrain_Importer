@@ -73,7 +73,7 @@ namespace DosTerrainImporter
             {
                 SetControlsStatus(false);
 
-                GrayScaleImporter importer = new GrayScaleImporter(dosFileName, grayScaleFileName, minHeight, maxHeight);
+                DosGrayScaleImporter importer = new DosGrayScaleImporter(dosFileName, grayScaleFileName, minHeight, maxHeight);
                 this.GrayProgressBar.Maximum = importer.getMaximumWriteOperations();
                 this.GrayProgressBar.Step = 1;
                 this.GrayProgressBar.Value = 0;
@@ -120,7 +120,7 @@ namespace DosTerrainImporter
         {
             Panel targetPanel = ((this.Parent) as Panel);
             targetPanel.Controls.Clear();
-            targetPanel.Controls.Add(new MainControl());
+            targetPanel.Controls.Add(new DosControl());
         }
     }
 }

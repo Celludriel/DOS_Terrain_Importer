@@ -122,7 +122,7 @@ namespace DosTerrainImporter
         {
             Panel targetPanel = ((this.Parent) as Panel);
             targetPanel.Controls.Clear();
-            targetPanel.Controls.Add(new MainControl());
+            targetPanel.Controls.Add(new DosControl());
         }
     }
 }

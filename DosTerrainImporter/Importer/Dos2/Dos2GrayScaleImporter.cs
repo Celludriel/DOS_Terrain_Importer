@@ -45,7 +45,7 @@ namespace DosTerrainImporter.Importer
             {
                 if(file.Contains(uuid) && file.Contains(PATCH_EXTENSION))
                 {
-                    patchFiles.Add(Path.GetFileNameWithoutExtension(file));
+                    patchFiles.Add(Path.GetFileName(file));
                 }
             }            
         }

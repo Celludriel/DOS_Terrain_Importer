@@ -9,6 +9,8 @@ namespace DosTerrainImporter.Importer
 {
     class Dos2GrayScaleImporter : TerrainImporter
     {
+        private const int MAX_FILE_OPERATIONS_FOR_ONE_PATCH = 1089;
+
         PatchFileWriter patchFileWriter = new PatchFileWriter();
         Bitmap bmp = null;
         String patchFileName = null;
@@ -27,7 +29,11 @@ namespace DosTerrainImporter.Importer
 
         public override void execute(object sender, DoWorkEventArgs e)
         {
-            int counter = patchFileWriter.WritePatchFile(patchFileName, bmp, minHeight, maxHeight, 1);
+            int bitmap_j_offset = 0;
+            int bitmap_i_offset = 0;
+
+            int counter = patchFileWriter.WritePatchFile(patchFileName, bmp, bitmap_j_offset, bitmap_i_offset, minHeight, maxHeight, 1);
+
             if (counter % 100 == 0 || counter == this.maxWriteOperations)
             {
                 (sender as BackgroundWorker).ReportProgress(counter);
@@ -36,7 +42,7 @@ namespace DosTerrainImporter.Importer
 
         public override int getMaximumWriteOperations()
         {
-            return 1089;
+            return MAX_FILE_OPERATIONS_FOR_ONE_PATCH;
         }
     }
 }

@@ -9,7 +9,9 @@ namespace DosTerrainImporter.Importer.Dos2
 {
     class PatchFileWriter
     {
-        public int WritePatchFile(String patchFileName, Bitmap bmp, float minHeight, float maxHeight, int counter)
+        private const int ONE_PATCH_MAX_DIMENSION = 33;
+
+        public int WritePatchFile(String patchFileName, Bitmap bmp, int bitmap_j_offset, int bitmap_i_offset, float minHeight, float maxHeight, int counter)
         {
             byte[] patchFileContents = File.ReadAllBytes(patchFileName);
             using (MemoryStream ms = new MemoryStream(patchFileContents))
@@ -21,9 +23,9 @@ namespace DosTerrainImporter.Importer.Dos2
                     using (BinaryWriter bw = new BinaryWriter(File.Open(patchFileName, FileMode.Create)))
                     {
                         bw.Write(fileHeaderInformation);
-                        for (int j = 0; j < bmp.Height; j++)
+                        for (int j = bitmap_j_offset; j < ONE_PATCH_MAX_DIMENSION; j++)
                         {
-                            for (int i = 0; i < bmp.Width; i++, counter++)
+                            for (int i = bitmap_i_offset; i < ONE_PATCH_MAX_DIMENSION; i++, counter++)
                             {
                                 br.ReadSingle();
                                 System.Drawing.Color col = bmp.GetPixel(bmp.Width - 1 - i, j);

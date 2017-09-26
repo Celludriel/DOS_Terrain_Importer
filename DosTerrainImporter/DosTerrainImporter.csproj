@@ -82,13 +82,20 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GrayScaleUserControl.cs">
+    <Compile Include="Dos2GrayScaleUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GrayScaleUserControl.Designer.cs">
-      <DependentUpon>GrayScaleUserControl.cs</DependentUpon>
+    <Compile Include="Dos2GrayScaleUserControl.Designer.cs">
+      <DependentUpon>Dos2GrayScaleUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Importer\GrayScaleImporter.cs" />
+    <Compile Include="DosGrayScaleUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DosGrayScaleUserControl.Designer.cs">
+      <DependentUpon>DosGrayScaleUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Importer\Dos2GrayScaleImporter.cs" />
+    <Compile Include="Importer\DosGrayScaleImporter.cs" />
     <Compile Include="Importer\TerrainImporter.cs" />
     <Compile Include="Importer\L3dtImporter.cs" />
     <Compile Include="L3dtUserControl.cs">
@@ -97,13 +104,19 @@
     <Compile Include="L3dtUserControl.Designer.cs">
       <DependentUpon>L3dtUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainControl.cs">
+    <Compile Include="DosControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainControl.Designer.cs">
-      <DependentUpon>MainControl.cs</DependentUpon>
+    <Compile Include="DosControl.Designer.cs">
+      <DependentUpon>DosControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="GameSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GameSelector.Designer.cs">
+      <DependentUpon>GameSelector.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow.cs">
@@ -130,14 +143,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="GrayScaleUserControl.resx">
-      <DependentUpon>GrayScaleUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Dos2GrayScaleUserControl.resx">
+      <DependentUpon>Dos2GrayScaleUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSelector.resx">
+      <DependentUpon>GameSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DosGrayScaleUserControl.resx">
+      <DependentUpon>DosGrayScaleUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="L3dtUserControl.resx">
       <DependentUpon>L3dtUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainControl.resx">
-      <DependentUpon>MainControl.cs</DependentUpon>
+    <EmbeddedResource Include="DosControl.resx">
+      <DependentUpon>DosControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

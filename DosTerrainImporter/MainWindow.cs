@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace DosTerrainImporter
 {
@@ -14,7 +7,12 @@ namespace DosTerrainImporter
         public MainWindow()
         {
             InitializeComponent();
-            this.MainPanel.Controls.Add(new MainControl());
+            this.MainPanel.Controls.Add(new GameSelector());
+        }
+
+        private void MainPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -19,7 +19,7 @@ namespace DosTerrainImporter
         public Dos2GrayScaleUserControl()
         {
             InitializeComponent();
-            grayDosBrowseDialog.Filter = "Patch files|*.patch";
+            grayDosBrowseDialog.Filter = "Data files|*.data";
             grayFileBrowseDialog.Filter = "Bitmap files|*.bmp;*.jpg;*.jpeg;*.png";
         }
 

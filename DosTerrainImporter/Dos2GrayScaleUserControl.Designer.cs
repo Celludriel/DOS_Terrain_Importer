@@ -93,7 +93,7 @@
             this.GrayDosFileLabel.Name = "GrayDosFileLabel";
             this.GrayDosFileLabel.Size = new System.Drawing.Size(91, 13);
             this.GrayDosFileLabel.TabIndex = 20;
-            this.GrayDosFileLabel.Text = "Divinity Patch File";
+            this.GrayDosFileLabel.Text = "Divinity Data File";
             // 
             // GrayGenerate
             // 

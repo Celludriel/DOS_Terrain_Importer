@@ -30,9 +30,9 @@ namespace DosTerrainImporter.Importer.Dos2
                                 br.ReadSingle();
 
                                 int pixelLocationX = (ONE_PATCH_MAX_DIMENSION * patchLocationX) + i;
-                                int pixelLocationY = (ONE_PATCH_MAX_DIMENSION * patchLocationY) + j;
- 
-                                System.Drawing.Color col = bmp.GetPixel(pixelLocationY, pixelLocationX);
+                                int pixelLocationY = ((bmp.Height - 1) - (ONE_PATCH_MAX_DIMENSION * patchLocationY)) - j;
+
+                                System.Drawing.Color col = bmp.GetPixel(pixelLocationX, pixelLocationY);
                                 float v = (float)(col.B) / 255.0F; // range [0; 1]
                                 v = v * (maxHeight - minHeight); // range [0; 25]
                                 v = v + minHeight; // range [-1; 24]

@@ -94,10 +94,11 @@
     <Compile Include="DosGrayScaleUserControl.Designer.cs">
       <DependentUpon>DosGrayScaleUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Importer\Dos2GrayScaleImporter.cs" />
-    <Compile Include="Importer\DosGrayScaleImporter.cs" />
+    <Compile Include="Importer\Dos2\Dos2GrayScaleImporter.cs" />
+    <Compile Include="Importer\Dos2\PatchFileWriter.cs" />
+    <Compile Include="Importer\Dos\DosGrayScaleImporter.cs" />
     <Compile Include="Importer\TerrainImporter.cs" />
-    <Compile Include="Importer\L3dtImporter.cs" />
+    <Compile Include="Importer\Dos\L3dtImporter.cs" />
     <Compile Include="L3dtUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

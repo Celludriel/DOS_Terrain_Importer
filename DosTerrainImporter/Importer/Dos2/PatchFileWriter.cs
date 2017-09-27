@@ -1,29 +1,17 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
 
-
-namespace DosTerrainImporter.Importer
+namespace DosTerrainImporter.Importer.Dos2
 {
-    class Dos2GrayScaleImporter : TerrainImporter
+    class PatchFileWriter
     {
-        Bitmap bmp = null;
-        String patchFileName = null;
-        float minHeight;
-        float maxHeight;
-        int maxWriteOperations = 0;
+        private const int ONE_PATCH_MAX_DIMENSION = 33;
 
-        public Dos2GrayScaleImporter(String patchFileName, String bitmapSourceFile, float minHeight, float maxHeight)
-        {
-            this.bmp = new Bitmap(bitmapSourceFile);
-            this.maxWriteOperations = getMaximumWriteOperations();
-            this.patchFileName = patchFileName;
-            this.minHeight = minHeight;
-            this.maxHeight = maxHeight;
-        }
-
-        public override void execute(object sender, DoWorkEventArgs e)
+        public void WritePatchFile(String patchFileName, Bitmap bmp, int patchLocationX, int patchLocationY, float minHeight, float maxHeight)
         {
             byte[] patchFileContents = File.ReadAllBytes(patchFileName);
             using (MemoryStream ms = new MemoryStream(patchFileContents))
@@ -31,24 +19,24 @@ namespace DosTerrainImporter.Importer
                 using (BinaryReader br = new BinaryReader(ms))
                 {
                     //Read Pversion4 and Patch version
-                    byte[] fileHeaderInformation = br.ReadBytes(12);                    
+                    byte[] fileHeaderInformation = br.ReadBytes(12);
                     using (BinaryWriter bw = new BinaryWriter(File.Open(patchFileName, FileMode.Create)))
                     {
                         bw.Write(fileHeaderInformation);
-                        for (int j = 0, counter = 1; j < bmp.Height; j++)
+                        for (int j = 0; j < ONE_PATCH_MAX_DIMENSION; j++)
                         {
-                            for (int i = 0; i < bmp.Width; i++, counter++)
+                            for (int i = 0; i < ONE_PATCH_MAX_DIMENSION; i++)
                             {
                                 br.ReadSingle();
-                                System.Drawing.Color col = bmp.GetPixel(bmp.Width - 1 - i, j);
+
+                                int pixelLocationX = (ONE_PATCH_MAX_DIMENSION * patchLocationX) + i;
+                                int pixelLocationY = (ONE_PATCH_MAX_DIMENSION * patchLocationY) + j;
+ 
+                                System.Drawing.Color col = bmp.GetPixel(pixelLocationY, pixelLocationX);
                                 float v = (float)(col.B) / 255.0F; // range [0; 1]
                                 v = v * (maxHeight - minHeight); // range [0; 25]
                                 v = v + minHeight; // range [-1; 24]
                                 bw.Write(v);
-                                if (counter % 100 == 0 || counter == this.maxWriteOperations)
-                                {
-                                    (sender as BackgroundWorker).ReportProgress(counter);
-                                }
                             }
                         }
                         while (true)
@@ -65,11 +53,6 @@ namespace DosTerrainImporter.Importer
                     }
                 }
             }
-        }
-
-        public override int getMaximumWriteOperations()
-        {
-            return bmp.Height * bmp.Width;
         }
     }
 }

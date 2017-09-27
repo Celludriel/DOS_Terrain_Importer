@@ -11,7 +11,7 @@ namespace DosTerrainImporter.Importer.Dos2
     {
         private const int ONE_PATCH_MAX_DIMENSION = 33;
 
-        public int WritePatchFile(String patchFileName, Bitmap bmp, int bitmap_j_offset, int bitmap_i_offset, float minHeight, float maxHeight, int counter)
+        public void WritePatchFile(String patchFileName, Bitmap bmp, int patchLocationX, int patchLocationY, float minHeight, float maxHeight)
         {
             byte[] patchFileContents = File.ReadAllBytes(patchFileName);
             using (MemoryStream ms = new MemoryStream(patchFileContents))
@@ -23,12 +23,16 @@ namespace DosTerrainImporter.Importer.Dos2
                     using (BinaryWriter bw = new BinaryWriter(File.Open(patchFileName, FileMode.Create)))
                     {
                         bw.Write(fileHeaderInformation);
-                        for (int j = bitmap_j_offset; j < ONE_PATCH_MAX_DIMENSION; j++)
+                        for (int j = 0; j < ONE_PATCH_MAX_DIMENSION; j++)
                         {
-                            for (int i = bitmap_i_offset; i < ONE_PATCH_MAX_DIMENSION; i++, counter++)
+                            for (int i = 0; i < ONE_PATCH_MAX_DIMENSION; i++)
                             {
                                 br.ReadSingle();
-                                System.Drawing.Color col = bmp.GetPixel(bmp.Width - 1 - i, j);
+
+                                int pixelLocationX = (ONE_PATCH_MAX_DIMENSION * patchLocationX) + i;
+                                int pixelLocationY = (ONE_PATCH_MAX_DIMENSION * patchLocationY) + j;
+ 
+                                System.Drawing.Color col = bmp.GetPixel(pixelLocationX, pixelLocationY);
                                 float v = (float)(col.B) / 255.0F; // range [0; 1]
                                 v = v * (maxHeight - minHeight); // range [0; 25]
                                 v = v + minHeight; // range [-1; 24]
@@ -49,7 +53,6 @@ namespace DosTerrainImporter.Importer.Dos2
                     }
                 }
             }
-            return counter;
         }
     }
 }

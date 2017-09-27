@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -6,3 +6,5 @@
 /DosTerrainImporter/obj/Debug
 /DosTerrainImporter/bin/Release
 /DosTerrainImporter/obj/Release
+*.ide
+*.suo
